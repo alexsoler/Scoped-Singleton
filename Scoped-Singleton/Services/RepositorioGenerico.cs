@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Scoped_Singleton.Models;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,17 @@ namespace Scoped_Singleton.Services
 
                 T entidad = await db.Set<T>().FindAsync(id);
                 return entidad;
+            }
+        }
+
+        public async Task<IEnumerable<T>> ListaCompleta()
+        {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var provider = scope.ServiceProvider;
+                var db = provider.GetRequiredService<AplicationDbContext>();
+
+                return await db.Set<T>().ToListAsync(); 
             }
         }
     }

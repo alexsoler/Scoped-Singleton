@@ -9,5 +9,6 @@ namespace Scoped_Singleton.Services
     {
         Task AddRegistroAsync(T entidad);
         Task<T> FindRegistro(int id);
+        Task<IEnumerable<T>> ListaCompleta();
     }
 }
