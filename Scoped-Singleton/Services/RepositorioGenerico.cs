@@ -23,6 +23,7 @@ namespace Scoped_Singleton.Services
                 var provider = scope.ServiceProvider;
                 var db = provider.GetRequiredService<AplicationDbContext>();
                 await db.Set<T>().AddAsync(entidad);
+                await db.SaveChangesAsync();
             }
         }
 
