@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Scoped_Singleton.Models;
+using Scoped_Singleton.Services;
 
 namespace Scoped_Singleton
 {
@@ -34,6 +35,7 @@ namespace Scoped_Singleton
             });
 
             services.AddDbContext<AplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddSingleton(typeof(IGenericRepository<>), typeof(RepositorioGenerico<>));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
