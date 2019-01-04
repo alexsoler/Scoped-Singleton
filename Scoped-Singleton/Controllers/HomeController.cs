@@ -5,11 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Scoped_Singleton.Models;
+using Scoped_Singleton.Services;
 
 namespace Scoped_Singleton.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IGenericRepository<Registro> db;
+
+        public HomeController(IGenericRepository<Registro> _db) => db = _db;
+
         public IActionResult Index()
         {
             return View();
@@ -18,6 +23,28 @@ namespace Scoped_Singleton.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public async Task<IActionResult> ListaRegistros()
+        {
+            return View(await db.ListaCompleta());
+        }
+
+        public IActionResult CrearRegistro()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CrearRegistro([Bind("Id,Descripcion")]Registro registro)
+        {
+            if(ModelState.IsValid)
+            {
+                await db.AddRegistroAsync(registro);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(registro);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
