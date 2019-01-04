@@ -10,10 +10,13 @@ namespace Scoped_Singleton.Services
 {
     public class RepositorioGenerico<T> : IGenericRepository<T> where T : class
     {
+        public static int contador = 0;
+
         private readonly IServiceProvider serviceProvider;
         public RepositorioGenerico(IServiceProvider _serviceProvider)
         {
             serviceProvider = _serviceProvider;
+            contador++;
         }
 
         public async Task AddRegistroAsync(T entidad)

@@ -47,6 +47,15 @@ namespace Scoped_Singleton.Controllers
             return View(registro);
         }
 
+        public IActionResult Contador()
+        {
+            var arreglo = new int[2];
+
+            arreglo[0] = RepositorioGenerico<Registro>.contador;
+            arreglo[1] = AplicationDbContext.contador;
+            return Json(arreglo);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

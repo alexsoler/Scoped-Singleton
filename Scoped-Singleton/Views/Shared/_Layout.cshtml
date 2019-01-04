@@ -27,6 +27,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_InstanciasPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -77,6 +78,18 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+    $(function () {
+        $("#btn").click(function () {
+            const url = '@Url.Action("Contador", "Home")';
+            $.get(url).done(function (data) {
+                $("#contadorSingleton").html(data[0]);
+                $("#contadorScoped").html(data[1]);
+            })
+        })
+    })
+    </script>
+
 
     @RenderSection("Scripts", required: false)
 </body>
